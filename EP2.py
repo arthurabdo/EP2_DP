@@ -80,3 +80,26 @@ def questao_para_texto(questao, n):
     resposta_correta = questao["correta"]
     return f"----------------------------------------\nQUESTAO {n}\n\n{titulo}\n\nRESPOSTAS:\n{opcoes_formatadas}\n"
     
+import random
+
+def gera_ajuda(questao):
+
+    titulo = questao["titulo"]
+    opcoes = questao["opcoes"]
+    correta = questao["correta"]
+
+    incorretas = [opcoes[opcao] for opcao in opcoes if opcao != correta]
+    
+
+    num_incorretas = len(incorretas)
+    
+
+    num_opcoes_ajuda = random.randint(1, 2)
+    opcoes_ajuda = random.sample(incorretas, num_opcoes_ajuda)
+    
+
+    dica = f"DICA:\nOpções certamente erradas: {' | '.join(opcoes_ajuda)}"
+    
+    return dica
+
+
