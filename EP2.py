@@ -8,19 +8,44 @@ def transforma_base(lista):
         saida[nivel].append(questao)
     return saida
 
-def valida_questao(dic):
-    saida = {}
-    titulo  = dic['titulo']
-    nivel = dic['nivel']
-    dic_opcoes = dic['opcoes']
-    correta = ['correta']
-    if titulo == '':
-        saida['titulo'] = 'nao_encontrado'
-    if titulo == ' ':
-        saida['titulo'] = 'vazio'
-    if nivel != 'facil' or nivel != 'medio ' or nivel != 'dificil':
-        saida['nivel'] = 'valor_errado'
-    if len(dic_opcoes) != 4:
-        saida['opcoes'] = 'tamanho_invalido'
+def valida_questao(questao):
+
+    erros = {}
+
+    chaves = ['titulo', 'nivel', 'opcoes', 'correta']
+    for chave in chaves:
+        if chave not in questao:
+            erros[chave] = 'nao_encontrado'
+
+    if len(questao) != 4:
+        erros['outro'] = 'numero_chaves_invalido'
+
+    if 'titulo' in questao and not questao['titulo'].strip():
+        erros['titulo'] = 'vazio'
+
+    niveis = ['facil', 'medio', 'dificil']
+    if 'nivel' in questao and questao['nivel'] not in niveis:
+        erros['nivel'] = 'valor_errado'
+
+
+    if 'opcoes' in questao and len(questao['opcoes']) != 4:
+        erros['opcoes'] = 'tamanho_invalido'
+    else:
+       
+        alternativas = ['A', 'B', 'C', 'D']
+        opcoes_existentes = set(questao.get('opcoes', {}).keys())
+        if not opcoes_existentes.issubset(alternativas):
+            erros['opcoes'] = 'chave_invalida_ou_nao_encontrada'
+
+        opcoes_vazias = {opcao: 'vazia' for opcao, resposta in questao.get('opcoes', {}).items() if not resposta.strip()}
+        if opcoes_vazias:
+            erros['opcoes'] = opcoes_vazias
+
+
+    if 'correta' in questao and questao['correta'] not in ['A', 'B', 'C', 'D']:
+        erros['correta'] = 'valor_errado'
+
+
+    return erros
          
          
