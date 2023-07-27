@@ -62,3 +62,21 @@ def sorteia_questao(questoes, nivel):
             
             x= random.choice(lista_questoes)
     return x
+
+def sorteia_questao_inedita (questoes, nivel, lista_sorteadas):
+    for dificuldade, lista_questoes in questoes.items():
+        if nivel== dificuldade:
+            x= random.choice(lista_questoes)    
+            while x in lista_sorteadas:
+                x= random.choice(lista_questoes)
+            
+            lista_sorteadas.append(x)
+            
+    return x 
+
+def questao_para_texto(questao, n):
+    titulo = questao["titulo"]
+    opcoes_formatadas = "\n".join(f"{opcao}: {texto}" for opcao, texto in questao["opcoes"].items())
+    resposta_correta = questao["correta"]
+    return f"----------------------------------------\nQUESTAO {n}\n\n{titulo}\n\nRESPOSTAS:\n{opcoes_formatadas}\n"
+    
