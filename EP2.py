@@ -113,7 +113,7 @@ ajuda = 2
 pulos = 3
 n_questao = 0
 acertos = 0
-end = False
+finaliza = True
 
 
 
@@ -638,3 +638,12 @@ questoes = { {
 
 }
  
+saida = transforma_base(questoes)
+
+# como escolher nivel por questao?
+
+while not finaliza:
+    questao_atual = sorteia_questao_inedita()
+    n_questao += 1
+
+    
