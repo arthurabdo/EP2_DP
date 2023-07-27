@@ -47,5 +47,10 @@ def valida_questao(questao):
 
 
     return erros
-         
-         
+
+def valida_questoes (lista_questoes):
+    lista = []
+    for i in range (len(lista_questoes)):
+        lista.append(valida_questao(lista_questoes[i]))
+    
+    return lista 
