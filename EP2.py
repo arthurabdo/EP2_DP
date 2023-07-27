@@ -1,10 +1,10 @@
 import random
 
 
-def transforma_base(lista):
+def transforma_base(questoes):
     saida = {}
-    for i in range(len(lista)):
-        questao = lista[i]
+    for i in range(len(questao)):
+        questao = questoes[i]
         nivel = questao['nivel'] 
         if nivel not in saida:
             saida[nivel] = []
@@ -67,11 +67,11 @@ def sorteia_questao(questoes, nivel):
     return x
 
 def sorteia_questao_inedita (questoes, nivel, lista_sorteadas):
-    for dificuldade, lista_questoes in questoes.items():
+    for dificuldade, lista_por_nivel in questoes.items():
         if nivel== dificuldade:
-            x= random.choice(lista_questoes)    
+            x= random.choice(lista_por_nivel)    
             while x in lista_sorteadas:
-                x= random.choice(lista_questoes)
+                x= random.choice(lista_por_nivel)
             
             lista_sorteadas.append(x)
             
@@ -83,7 +83,6 @@ def questao_para_texto(questao, n):
     resposta_correta = questao["correta"]
     return f"----------------------------------------\nQUESTAO {n}\n\n{titulo}\n\nRESPOSTAS:\n{opcoes_formatadas}\n"
     
-import random
 
 def gera_ajuda(questao):
 
@@ -93,10 +92,8 @@ def gera_ajuda(questao):
 
     incorretas = [opcoes[opcao] for opcao in opcoes if opcao != correta]
     
-
     num_incorretas = len(incorretas)
     
-
     num_opcoes_ajuda = random.randint(1, 2)
     opcoes_ajuda = random.sample(incorretas, num_opcoes_ajuda)
     
@@ -106,8 +103,14 @@ def gera_ajuda(questao):
     return dica
 
 
-print('Bem vindo! Você está na Fortuna DesSoft e terá a oportunidade de enriquecer!')
+print('Bem vindo! Você está na Fortuna DesSoft! Aqui terá a oportunidade de enriquecer!')
 nome = input(str('Seu nome: '))
 print(f'Ok {nome}, você tem direito a pular 3 vezes e 2 ajudas\n As opções de resposta são "A", "B", "C", "D", "ajuda", "pula" e "parar"! ')
-print('Aperte ENTER para continuar')
+print('Aperte ENTER para iniciar')
 
+premio = [0, 1000, 5000, 10000, 30000, 50000, 100000, 300000, 500000, 1000000]
+ajuda = 2
+pulos = 3
+n_questao = 0
+acertos = 0
+end = False
