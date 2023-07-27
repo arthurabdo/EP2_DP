@@ -1,3 +1,6 @@
+import random
+
+
 def transforma_base(lista):
     saida = {}
     for i in range(len(lista)):
@@ -31,7 +34,7 @@ def valida_questao(questao):
     if 'opcoes' in questao and len(questao['opcoes']) != 4:
         erros['opcoes'] = 'tamanho_invalido'
     else:
-       
+    
         alternativas = ['A', 'B', 'C', 'D']
         opcoes_existentes = set(questao.get('opcoes', {}).keys())
         if not opcoes_existentes.issubset(alternativas):
@@ -55,7 +58,7 @@ def valida_questoes (lista_questoes):
     
     return lista 
 
-import random
+
 def sorteia_questao(questoes, nivel):
     for dificuldade, lista_questoes in questoes.items():
         if nivel== dificuldade:
@@ -102,4 +105,9 @@ def gera_ajuda(questao):
     
     return dica
 
+
+print('Bem vindo! Você está na Fortuna DesSoft e terá a oportunidade de enriquecer!')
+nome = input(str('Seu nome: '))
+print(f'Ok {nome}, você tem direito a pular 3 vezes e 2 ajudas\n As opções de resposta são "A", "B", "C", "D", "ajuda", "pula" e "parar"! ')
+print('Aperte ENTER para continuar')
 
