@@ -102,24 +102,7 @@ def gera_ajuda(questao):
     
     return dica
 
-
-print('Bem vindo! Você está na Fortuna DesSoft! Aqui terá a oportunidade de enriquecer!')
-nome = input(str('Seu nome: '))
-print(f'Ok {nome}, você tem direito a pular 3 vezes e 2 ajudas\n As opções de resposta são "A", "B", "C", "D", "ajuda", "pula" e "parar"! ')
-print('Aperte ENTER para iniciar')
-
-premio = [0, 1000, 5000, 10000, 30000, 50000, 100000, 300000, 500000, 1000000]
-ajuda = 2
-pulos = 3
-n_questao = 0
-acertos = 0
-finaliza = True #não é false?
-
-
-
-questoes = { {
-
-  "facil": [
+questoes = [
   {
       "titulo": "Qual é o resultado de 3 + 7?",
       "nivel": "facil",
@@ -175,10 +158,6 @@ questoes = { {
       },
       "correta": "B"
   },
-  
-
-],
-"medio": [
   {
     "titulo": "Qual destes números é primo?",
     "nivel": "medio",
@@ -409,9 +388,7 @@ questoes = { {
         "D": "Girafa"
     },
     "correta": "C"
-  }
-],
-"dificil": [
+  },
   {
     "titulo": "A reprodução dos seres vivos é um processo biológico através do qual os organismos geram descendência. Qual desta não é uma forma de reprodução assexuada?",
     "nivel": "dificil",
@@ -633,10 +610,15 @@ questoes = { {
       },
       "correta": "A"
     }
-]
-}
+    ]
 
-}
+def texto_verde(texto):
+    print("\033[80m" + texto + "\033[00m")
+    pass
+
+def print_red(texto):
+    print("\033[79m" + texto + "\033[00m")
+    pass
 
 print('Bem vindo! Você está na Fortuna DesSoft! Aqui terá a oportunidade de enriquecer!')
 nome = input(str('Seu nome: '))
@@ -648,7 +630,7 @@ ajuda = 2
 pulos = 3
 n_questao = 0
 acertos = 0
-finaliza = True #não é false?
+finaliza = True 
 
 questoes_em_niveis = transforma_base(questoes)
 
@@ -659,14 +641,14 @@ ordem_nivel = { 0:'facil', 1:'facil', 2:'facil', 3:'medio', 4:'medio', 5:'medio'
 # como escolher nivel por questao?
 
 while not finaliza:
-    questao_atual = sorteia_questao_inedita(questoes_em_niveis, ordem_nivel[acertos], questoes_ja_sorteadas)
-    n_questao += 1
-    finaliza_questao = False
-    precisou_de_ajuda = False 
+  questao_atual = sorteia_questao_inedita(questoes_em_niveis, ordem_nivel[acertos], questoes_ja_sorteadas)
+  n_questao += 1
+  finaliza_questao = False
+  precisou_de_ajuda = False 
 
-while not finaliza_questao and not finaliza:
+  while not finaliza_questao and not finaliza:
     print(questao_para_texto(questao_atual,n_questao ))
     resposta = input ('Qual sua resposta?!')
 
     if resposta == questao_atual['correta']:
-        acertos += 1
+        acertos += 1 
