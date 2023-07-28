@@ -103,17 +103,6 @@ def gera_ajuda(questao):
     return dica
 
 
-print('Bem vindo! Você está na Fortuna DesSoft! Aqui terá a oportunidade de enriquecer!')
-nome = input(str('Seu nome: '))
-print(f'Ok {nome}, você tem direito a pular 3 vezes e 2 ajudas\n As opções de resposta são "A", "B", "C", "D", "ajuda", "pula" e "parar"! ')
-print('Aperte ENTER para iniciar')
-
-premio = [0, 1000, 5000, 10000, 30000, 50000, 100000, 300000, 500000, 1000000]
-ajuda = 2
-pulos = 3
-n_questao = 0
-acertos = 0
-finaliza = True #não é false?
 
 
 
@@ -670,3 +659,53 @@ while not finaliza_questao and not finaliza:
 
     if resposta == questao_atual['correta']:
         acertos += 1
+        print_green(f'Você acertou! Seu prêmio atual é de R$ {premio[acertos]:.2f}')
+        finaliza_questao = True
+
+    elif resposta == 'pula':
+        if pulos == 0:
+            print_red('Não deu! Você não tem mais direios a pulos!')
+            input('Aperte ENTER para continuar...')
+        else:
+          pulos -= 1 
+          if pulos == 0:
+            print('Ok, pulando! ATENÇÃO: Você não tem mais direito a pulos!')
+            input('Aperte ENTER para continuar...')#tem isso??
+            finaliza_questao = True
+          else:
+            print(f'Ok, pulando! Você ainda tem {pulos} pulos!')
+            finaliza_questao = True
+
+    elif resposta == 'ajuda':
+        if ajuda == 0:
+          print_red('Não deu! Você não tem mais direito a ajuda!')
+          input('Aperte ENTER para continuar...')
+        elif precisou_de_ajuda:
+          print_red('Não deu! Você já pediu ajuda nesta questão!')
+          input('Aperte ENTER para continuar...')
+        else:
+          ajuda -= 1
+          precisou_de_ajuda = True 
+          print(gera_ajuda(questao_atual))
+          print(f'Ok, lá vem ajuda! Você ainda tem {ajuda} ajudas!')
+          input('Aperte ENTER para continuar...')
+
+    elif resposta == 'parar':
+      parar = input(f'Deseja mesmo parar [S/N]?? Caso responda "S", sairá com R$ {premio[acertos]:.2f}!')
+      if parar == 'S':
+        finaliza = True
+      else:
+        print_red('Opção inválida!')
+        parar = input(f'Deseja mesmo parar [S/N]?? Caso responda "S", sairá com R$ {premio[acertos]:.2f}!')
+    elif resposta in ['A', 'B', 'C', 'D']:
+      print_yellow('Que pena! Você errou e vai sair sem nada :(')
+      finaliza = True
+    else:
+      print_red('Opção inválida!')
+      print('As opções de resposta são 'A', 'B', 'C', 'D', 'ajuda', 'pula' ou 'parar'')
+      resposta = input ('Qual sua resposta?!')  
+
+if acertos == 9:
+   print_green('PARABÉNS, você zerou o jogo e ganhou um milhão de reais!')   
+        
+
