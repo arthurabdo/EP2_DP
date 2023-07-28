@@ -102,7 +102,24 @@ def gera_ajuda(questao):
     
     return dica
 
-questoes = [
+
+print('Bem vindo! Você está na Fortuna DesSoft! Aqui terá a oportunidade de enriquecer!')
+nome = input(str('Seu nome: '))
+print(f'Ok {nome}, você tem direito a pular 3 vezes e 2 ajudas\n As opções de resposta são "A", "B", "C", "D", "ajuda", "pula" e "parar"! ')
+print('Aperte ENTER para iniciar')
+
+premio = [0, 1000, 5000, 10000, 30000, 50000, 100000, 300000, 500000, 1000000]
+ajuda = 2
+pulos = 3
+n_questao = 0
+acertos = 0
+finaliza = True #não é false?
+
+
+
+questoes = { {
+
+  "facil": [
   {
       "titulo": "Qual é o resultado de 3 + 7?",
       "nivel": "facil",
@@ -651,4 +668,4 @@ while not finaliza:
     resposta = input ('Qual sua resposta?!')
 
     if resposta == questao_atual['correta']:
-        acertos += 1 
+        acertos += 1
