@@ -658,14 +658,64 @@ ordem_nivel = { 0:'facil', 1:'facil', 2:'facil', 3:'medio', 4:'medio', 5:'medio'
 # como escolher nivel por questao?
 
 while not finaliza:
-  questao_atual = sorteia_questao_inedita(questoes_em_niveis, ordem_nivel[acertos], questoes_ja_sorteadas)
-  n_questao += 1
-  finaliza_questao = False
-  precisou_de_ajuda = False 
+    questao_atual = sorteia_questao_inedita(questoes_em_niveis, ordem_nivel[acertos], questoes_ja_sorteadas)
+    n_questao += 1
+    finaliza_questao = False
+    precisou_de_ajuda = False 
 
-  while not finaliza_questao and not finaliza:
+while not finaliza_questao and not finaliza:
     print(questao_para_texto(questao_atual,n_questao ))
     resposta = input ('Qual sua resposta?!')
 
     if resposta == questao_atual['correta']:
         acertos += 1
+        print_green(f'Você acertou! Seu prêmio atual é de R$ {premio[acertos]:.2f}')
+        finaliza_questao = True
+
+    elif resposta == 'pula':
+        if pulos == 0:
+            print_red('Não deu! Você não tem mais direios a pulos!')
+            input('Aperte ENTER para continuar...')
+        else:
+          pulos -= 1 
+          if pulos == 0:
+            print('Ok, pulando! ATENÇÃO: Você não tem mais direito a pulos!')
+            input('Aperte ENTER para continuar...')#tem isso??
+            finaliza_questao = True
+          else:
+            print(f'Ok, pulando! Você ainda tem {pulos} pulos!')
+            finaliza_questao = True
+
+    elif resposta == 'ajuda':
+        if ajuda == 0:
+          print_red('Não deu! Você não tem mais direito a ajuda!')
+          input('Aperte ENTER para continuar...')
+        elif precisou_de_ajuda:
+          print_red('Não deu! Você já pediu ajuda nesta questão!')
+          input('Aperte ENTER para continuar...')
+        else:
+          ajuda -= 1
+          precisou_de_ajuda = True 
+          print(gera_ajuda(questao_atual))
+          print(f'Ok, lá vem ajuda! Você ainda tem {ajuda} ajudas!')
+          input('Aperte ENTER para continuar...')
+
+    elif resposta == 'parar':
+      parar = input(f'Deseja mesmo parar [S/N]?? Caso responda "S", sairá com R$ {premio[acertos]:.2f}!')
+      if parar == 'S':
+        finaliza = True
+      else:
+        print_red('Opção inválida!')
+        parar = input(f'Deseja mesmo parar [S/N]?? Caso responda "S", sairá com R$ {premio[acertos]:.2f}!')
+    elif resposta in ['A', 'B', 'C', 'D']:
+      print_yellow('Que pena! Você errou e vai sair sem nada :(')
+      finaliza = True
+    else:
+      print_red('Opção inválida!')
+      print('As opções de resposta são 'A', 'B', 'C', 'D', 'ajuda', 'pula' ou 'parar'')
+      resposta = input ('Qual sua resposta?!')  
+
+if acertos == 9:
+   print_green('PARABÉNS, você zerou o jogo e ganhou um milhão de reais!')   
+        
+
