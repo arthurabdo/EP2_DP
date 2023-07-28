@@ -113,7 +113,7 @@ ajuda = 2
 pulos = 3
 n_questao = 0
 acertos = 0
-finaliza = True
+finaliza = True #não é false?
 
 
 
@@ -534,11 +534,11 @@ questoes = { {
     "correta": "A"
   },
   {
-    "titulo": "complete: Chega de mentiras, de negar o meu desejo, eu te quuero mais que tudo, ____________",
+    "titulo": "complete: Chega de mentiras, de negar o meu desejo, eu te quero mais que tudo, ____________",
     "nivel": "dificil",
     "opcoes": {
         "A": "Eu preciso do seu beijo",
-        "B": "E euquero seu chamego",
+        "B": "E eu quero seu chamego",
         "C": "Amanhã eu não te deixo",
         "D": "Fico triste sem seu cheiro"
     },
@@ -637,13 +637,36 @@ questoes = { {
 }
 
 }
- 
-saida = transforma_base(questoes)
+
+print('Bem vindo! Você está na Fortuna DesSoft! Aqui terá a oportunidade de enriquecer!')
+nome = input(str('Seu nome: '))
+print(f'Ok {nome}, você tem direito a pular 3 vezes e 2 ajudas\n As opções de resposta são "A", "B", "C", "D", "ajuda", "pula" e "parar"! ')
+print('Aperte ENTER para iniciar')
+
+premio = [0, 1000, 5000, 10000, 30000, 50000, 100000, 300000, 500000, 1000000]
+ajuda = 2
+pulos = 3
+n_questao = 0
+acertos = 0
+finaliza = True #não é false?
+
+questoes_em_niveis = transforma_base(questoes)
+
+questoes_ja_sorteadas = []
+
+ordem_nivel = { 0:'facil', 1:'facil', 2:'facil', 3:'medio', 4:'medio', 5:'medio', 6: random.choice (['medio', 'dificil']), 7:'dificil', 8: 'dificil', 9:'dificil'}
 
 # como escolher nivel por questao?
 
 while not finaliza:
-    questao_atual = sorteia_questao_inedita()
+    questao_atual = sorteia_questao_inedita(questoes_em_niveis, ordem_nivel[acertos], questoes_ja_sorteadas)
     n_questao += 1
+    finaliza_questao = False
+    precisou_de_ajuda = False 
 
-    
+while not finaliza_questao and not finaliza:
+    print(questao_para_texto(questao_atual,n_questao ))
+    resposta = input ('Qual sua resposta?!')
+
+    if resposta == questao_atual['correta']:
+        acertos += 1
